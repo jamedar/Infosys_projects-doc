@@ -1,0 +1,12 @@
+---
+- name: Directory 
+  hosts: all
+  tasks:
+   - name: Create teh Directory 
+     file:
+       path: /home/khader/tested
+       state:  directory
+       owner: root
+       group: root
+       mode: 0755
+    
