@@ -1,0 +1,9 @@
+---
+- name: Gather  uptime info
+  hosts: all
+  become_method: sudo
+  become: yes
+  ignore_errors: true
+  roles:
+    - name:  uptime
+      role: /home/khader/ansible/uptime
