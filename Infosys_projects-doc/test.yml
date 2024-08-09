@@ -1,0 +1,15 @@
+
+- hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: true
+  tasks: 
+   - name : Ensure httpd is service is running
+     systemd:
+        name: httpd
+        state: status
+        owner: root
+     register: httpd_status
+   - name: Display httpd status 
+     debug:
+        msg: "httpd service status is {{ httpd_status }}"

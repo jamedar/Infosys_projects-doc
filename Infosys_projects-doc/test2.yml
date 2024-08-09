@@ -1,0 +1,13 @@
+---
+- name: Check HTTPD status
+  hosts: all
+  become: yes
+  tasks:
+   - name: Get HTTPD service status
+     systemd:
+       name: httpd
+       state: started
+     register: httpd_status
+   - name: Display HTTPD service status
+     debug:
+       msg: "HTTPD service status is {{ httpd_status }}"

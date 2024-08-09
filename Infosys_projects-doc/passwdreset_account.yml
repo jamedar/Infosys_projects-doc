@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  gather_facts: true
+#  serial: 1
+  become: true
+  tasks:
+
+  - name: change the passwd 
+    user:
+      name: "sps_glo_ibnext17"
+      password: "$6$iXfOC5xPNqynFt7W$MUCBkVh0FBrzTVu7jP3TQChve3DLasPe1GKVxXC7.okmwVl4P7c.YMcp.p3ZFff7ZxtHJh2LUw4NV3YLRbvD10"

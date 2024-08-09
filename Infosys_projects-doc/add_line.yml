@@ -1,0 +1,16 @@
+---
+- name : Add the new line to the file
+  hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: false
+  ignore_errors: true
+  tasks:
+    - name: Add the new line
+      lineinfile: 
+          path: /home/khader/ansible/testing
+#          regexp: '^Hello I am good$'
+          line: 'What else going on'
+          state: present
+
+           

@@ -1,0 +1,15 @@
+---
+- name: To check netback-up status 
+  hosts: all
+  gather_facts: false
+  become_method: sudo 
+  become: yes
+  ignore_errors: yes
+  tasks:
+    - name: To Check servive is up or not 
+      shell: /usr/openv/netbackup/bin/goodies/netbackup status
+      register: netbkp_status
+    - name: To Display the netbackup services 
+      debug: 
+        msg: "Status on netbackup:{{ netbkp_status.stdout }}"
+

@@ -1,0 +1,21 @@
+---
+- name: Creating the multiple users
+  hosts: all
+  become_method: sudo 
+  become: yes
+  gather_facts: false
+  ignore_errors: yes
+  tasks:
+   - name: check the  user existence
+     command: id "{{ item }}"
+     register: users_d
+     with_items:
+       - grdxchem 
+       - hbadmin
+   - debug:
+       msg: "{{ item }} user_exist: {{ users_d.result[item].stdout}}"
+     
+
+#   - debug:
+#      msg:  var=users_d.stdout.lines
+ 

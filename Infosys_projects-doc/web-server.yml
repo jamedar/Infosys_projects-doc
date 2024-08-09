@@ -1,0 +1,28 @@
+-
+   hosts: all
+   become_method: sudo 
+   become: yes
+   ignore_errors: yes
+   gather_facts: false
+   tasks:
+      - name : run the date command
+        command: date
+        register: date2
+      - debug:
+          var: date2.stdout_lines
+      - name:  Install the httpd/apache server
+        yum:  
+           name: httpd*
+           state:  removed
+        register: web_server
+      - debug:
+          var: web_server
+      - name: check the status 
+        service:
+            name: httpd
+            state: stopped
+        register: ser_started
+      - debug:
+          var: ser_started
+        
+  
