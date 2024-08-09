@@ -1,0 +1,25 @@
+- name: Check if multiple users exist
+  hosts: all
+  become: yes
+  gather_facts: false
+  vars:
+    users:
+     - gradkchem
+     - hbadmin
+  tasks:
+   - name: Check if the user exists
+     command: id '{{ item }}'
+     register: user_check_results
+     ignore_errors: yes
+     with_items: "{{ users }}"
+#   - name: Show user existence status
+   - debug:
+       msg: "{{ item.stdout }}"
+#       msg: "user {{ item.item }} exists: {{ item.stdout }}"
+     with_items: "{{ user_check_results.results }}"
+     when: item.rc == 0
+   - name: Show user non-existence status
+     debug:
+       msg: "{{ item.item }} does not exist"
+     with_items: "{{ user_check_results.results }}"
+     when: item.rc != 0
