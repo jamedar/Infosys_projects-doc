@@ -1,0 +1,57 @@
+[root@p2lg0739 gattupar]# cat passwdreset-cyberark.yml
+---
+
+- hosts: all
+  gather_facts: true
+#  serial: 1
+  become: true
+  tasks:
+
+  - name: setting the facts
+    set_fact:
+      user1: "{{ ansible_hostname + 'funcadm431' }}"
+      user2: "{{ ansible_hostname + 'funcadm432' }}"
+      user3: "{{ ansible_hostname + 'funcadm433' }}"
+      user4: "{{ ansible_hostname + 'funcadm434' }}"
+      user5: "{{ ansible_hostname + 'funcadm435' }}"
+      user6: "{{ ansible_hostname + 'funcadm436' }}"
+      user7: "{{ ansible_hostname + 'funcadm437' }}"
+      user8: "{{ ansible_hostname + 'funcadm438' }}"
+      user9: "{{ ansible_hostname + 'funcadm439' }}"
+      user10: "{{ ansible_hostname + 'funcadm440' }}"
+      user11: "{{ ansible_hostname + 'funcadm441' }}"
+      user12: "{{ ansible_hostname + 'funcadm442' }}"
+      user13: "{{ ansible_hostname + 'funcadm443' }}"
+      user14: "{{ ansible_hostname + 'funcadm444' }}"
+      user15: "{{ ansible_hostname + 'funcadm445' }}"
+      user16: "{{ ansible_hostname + 'funcadm446' }}"
+      user17: "{{ ansible_hostname + 'funcadm447' }}"
+      user18: "{{ ansible_hostname + 'funcadm448' }}"
+      user19: "{{ ansible_hostname + 'funcadm449' }}"
+      user20: "{{ ansible_hostname + 'funcadm450' }}"
+
+  - name: change the passwd
+    user:
+      name: "{{item.username}}"
+      password: "$6$1zkWR8DbVpYyNMv9$2z0yn5kVU.T7FZWaM0dycXD0giZNTJRNa4//.jzm3JJpQBjFetj0ymkaJSG8x7RlizkcbOQOgFgpoNll.jUQk."
+    with_items:
+    - { username: '{{ user1 }}' }
+    - { username: '{{ user2 }}' }
+    - { username: '{{ user3 }}' }
+    - { username: '{{ user4 }}' }
+    - { username: '{{ user5 }}' }
+    - { username: '{{ user6 }}' }
+    - { username: '{{ user7 }}' }
+    - { username: '{{ user8 }}' }
+    - { username: '{{ user9 }}' }
+    - { username: '{{ user10 }}' }
+    - { username: '{{ user11 }}' }
+    - { username: '{{ user12 }}' }
+    - { username: '{{ user13 }}' }
+    - { username: '{{ user14 }}' }
+    - { username: '{{ user15 }}' }
+    - { username: '{{ user16 }}' }
+    - { username: '{{ user17 }}' }
+    - { username: '{{ user18 }}' }
+    - { username: '{{ user19 }}' }
+    - { username: '{{ user20 }}' }

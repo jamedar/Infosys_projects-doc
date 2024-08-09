@@ -1,0 +1,57 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: fasle
+  ignore_errors: yes
+  tasks:
+  - name: copy RPM files
+    copy:
+      src: /home/amitk/Nagios-agent
+      dest: /tmp/
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: install ncpagent
+    shell: bash -c " python /tmp/Nagios-agent ; sh /tmp/Nagios-agent/install.sh "
+
+  - name: copy ncpa.cfg
+    copy:
+      src: /home/amitk/Nagios-agent/ncpa.cfg
+      dest: /usr/local/ncpa/etc
+      owner: root
+      group: root
+      mode: 0755
+    register: output
+
+  - name: stop ncpa_passive
+    service:
+      name: ncpa_passive
+      state: stopped
+    tags:
+      - install_ncpa
+      - all
+
+  - name: disable ncpa_passive
+    command: systemctl disable ncpa_passive
+    tags:
+      - install_ncpa
+      - all
+
+  - name: restart ncpa_listener
+    service:
+      name: ncpa_listener
+      state: restarted
+    tags:
+      - install_ncpa
+      - config_ncpa
+      - restart_ncpa
+      - all
+
+  - name: send testmail
+    mail:
+      to: amitkumar.bhoi@hpe.com
+      cc: afsha-sakeena.shaik-infosys@hpe.com
+      subject: ncpainstall
+      body: "{{ output.stdout}}"
+

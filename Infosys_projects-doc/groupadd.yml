@@ -1,0 +1,8 @@
+[root@p2lg0739 amitk]# cat groupadd.yml
+- hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: fasle
+  tasks:
+    - name: get the output
+      shell: bash -c 'groupadd infagrp '

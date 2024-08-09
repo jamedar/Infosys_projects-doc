@@ -1,28 +1,14 @@
----
-- name: Add Users
-  hosts: all
-  become: yes
-  tasks:
-   - name: Add a new user
-     user:
-       name: google
-       state: present
-- name: Assign Groups to Users
-  hosts: all
-  become: yes
-  tasks:
-   - name: Add user to sudo group for administrative privileges
-     user:
-       name: goggle
-       groups: remote
-       append: yes
-- name: Verify User Details
-  hosts: all
-  become: yes
-  tasks:
-   - name: Check user details
-     command: id google
-     register: user_details
-   - name: Display user details
-     debug:
-       msg: "{{ user_details.stdout }}"
+-  hosts: all
+   become_method: sudo 
+   become:  yes
+   gather_facts: false
+   ignore_errors: true
+   tasks:
+     - name:  Add the user
+       shell: useradd sps_glo_ibnext17
+       register: user_added_successfully
+     - debug: var=user_added_successfully.stdout_lines
+     - name: Assinging remote wheel permissions
+       command: usermod -aG remote sps_glo_ibnext17
+       register: Permission_assigned
+     - debug: var=Permission_assigned.stdout_lines

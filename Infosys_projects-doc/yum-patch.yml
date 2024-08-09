@@ -1,0 +1,13 @@
+---
+- name: Execute tasks on target servers
+  hosts: all
+  become: true
+  tasks:
+   - name: Install yum-plugin-versionlock and version lock packages
+     yum:
+       name: "{{ item }}"
+       state: present
+     loop:
+       - yum-plugin-versionlock
+       - docker*
+       - java-1.8.0-openjdk*

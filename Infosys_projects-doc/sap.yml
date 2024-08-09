@@ -1,0 +1,15 @@
+- hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: false
+  tasks:
+   - name: copy the scripit
+     copy:
+        src: /home/khader/REQ234
+        dest: /etc/sudoers.d/
+        owner: root
+        group: root
+        mode: 044
+  tasks:
+   - name: To remove the file
+     command: rm -rf REQ234

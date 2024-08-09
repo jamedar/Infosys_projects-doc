@@ -1,0 +1,13 @@
+- hosts: all
+  become_method: sudo
+  become: yes
+  ignore_errors: yes
+  tasks:
+    - name: To Check to the last reboot of the server
+      command:  uptime
+      register: last_reboot_status
+    - debug: var=last_reboot_status.stdout_lines
+    - name : To Check the lasteset kernwl of the node
+      command: last reboot
+      register: lastest_kernel_avail
+    - debug: var=lastest_kernel_avail.stdout_lines

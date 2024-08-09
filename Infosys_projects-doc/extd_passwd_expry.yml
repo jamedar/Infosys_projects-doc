@@ -1,0 +1,20 @@
+- hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: false
+  ignore_errors: yes
+  tasks:
+   - name : extending the password expiry.
+     shell: chage -d today {{ item }}
+     with_items:
+      - pdwmgr
+      - pdwsftp
+      - fpromgr
+      - fprosftp
+      - wwpomgr
+      - wwposftp
+#      - convenaint
+#      - PARTSAVE_MAL
+     register: passwd_exp_extd
+   - debug: var=passwd_exp_extd.stdout_lines
+

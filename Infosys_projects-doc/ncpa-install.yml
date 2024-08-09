@@ -1,0 +1,10 @@
+--
+- hosts: all
+  gather_facts: no
+  become_method: sudoo
+  become: yes
+  tasks:
+    - name : Check the OS version
+      shell: cat /etc/os-release
+      register: os_version_equals_to
+      

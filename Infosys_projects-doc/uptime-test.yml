@@ -1,0 +1,15 @@
+- hosts: all
+# user: buildadm
+  become_method: sudo
+  become: yes
+  gather_facts: false
+  ignore_errors: yes
+  tasks:
+   - name: get the output
+     command: chage -d today  kavalein
+     register: out1
+   - debug: var=out1.stdout_lines
+   - name: Get the user  status 
+     command: id kavalein
+     register: access_granted_status
+   - debug: var=access_granted_status.stdout_lines

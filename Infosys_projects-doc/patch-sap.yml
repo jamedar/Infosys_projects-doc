@@ -1,0 +1,40 @@
+- name: Patch and reboot server
+  hosts: all
+  become: true
+  tasks:
+    - name: copy the prepatch script
+      copy:
+        src: /home/amitk/prepatch.sh
+        dest: /tmp/prepatch.sh
+        owner: root
+        group: root
+        mode: 0755
+    - name: execute the script and get the  output via mail
+      shell: bash -c " sh /tmp/prepatch.sh"
+
+    - name: copy script
+      copy:
+        src: /home/addepals/test.sh
+        dest: /tmp/do_patch.sh
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: get the output
+      shell: bash /tmp/do_patch.sh init
+
+    #- name: wait until script complete
+     # ansible.builtin.wait_for:
+       # timeout: 900
+        #delegate_to: pause
+
+    - name: copy the postpatch for script
+      copy:
+        src: /home/amitk/postpatch.sh
+        dest: /tmp/postpatch.sh
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: execute the script and get the  output via mail
+      shell: bash -c " sh /tmp/postpatch.sh"

@@ -1,0 +1,12 @@
+- hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: fasle
+  tasks:
+    - name: install pkg
+      yum:
+        name: httpd
+        state: latest
+
+#    - name : crun command
+#      command: service ntpd start

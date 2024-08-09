@@ -1,0 +1,16 @@
+- hosts: all
+# user: hpeadm
+  become_method: sudo
+  become: yes
+  gather_facts: false
+  ignore_errors: yes
+  tasks:
+#   - name: Upgrade python3
+#     package:
+#      name: python3
+#      state: latest
+   - name: Upgrading the kernel
+     package:
+      name: kernel
+      state: latest
+

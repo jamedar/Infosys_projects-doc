@@ -1,0 +1,13 @@
+- hosts: all
+  become: yes
+#  gather_facts: fasle
+#  ignore_errors: yes
+  tasks:
+  - name: copy script
+    copy:
+      src: /home/khader/RITM0429596
+      dest: /etc/sudoers.d/
+      owner: root
+      group: root
+      mode: 0640
+

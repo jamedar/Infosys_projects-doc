@@ -1,0 +1,44 @@
+- name: Patch and reboot server
+  hosts: all
+  become: true
+  tasks:
+    - name: copy the script
+      copy:
+        src: /home/amitk/prepatch.sh
+        dest: /tmp/prepatch.sh
+        owner: root
+        group: root
+        mode: 0755
+    - name: execute the script and get the  output via mail
+      shell: bash -c " sh /tmp/prepatch.sh"
+
+    - name: Update package cache
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+        exclude: docker
+      when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+
+    - name: Update package yum
+      zypper:
+        name: '*'
+        state: latest
+      when: ansible_distribution == 'SLES_SAP' or ansible_distribution == 'SLES'
+
+    - name: Reboot server
+      reboot:
+        pre_reboot_delay: 5
+        reboot_timeout: 300
+        post_reboot_delay: 10
+        test_command: uptime
+
+    - name: copy the script
+      copy:
+        src: /home/amitk/postpatch.sh
+        dest: /tmp/postpatch.sh
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: execute the script and get the  output via mail
+      shell: bash -c " sh /tmp/postpatch.sh"
